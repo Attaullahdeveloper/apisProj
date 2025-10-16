@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stat1proj/Apis/InsertAPIs.dart';
 import 'package:stat1proj/Appconstants/Getall_Users.dart';
 import 'package:stat1proj/Appconstants/ender_id.dart';
 import 'package:stat1proj/Collection_subCollection/fetch_screen.dart';
@@ -13,6 +14,7 @@ import 'package:stat1proj/signup_signin_screen/signinscreen.dart';
 import 'package:stat1proj/signup_signin_screen/signupscreen.dart';
 import 'package:stat1proj/state_counterapp.dart';
 
+import 'Apis/Insertsplash.dart';
 import 'Apis/fetch_data.dart';
 import 'Collection_subCollection/Insert_screen.dart';
 import 'loginuser.dart';
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:GetallUsers()
+      home:InsertSplashscreen()
     );
   }
 }
