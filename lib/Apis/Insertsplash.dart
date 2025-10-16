@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:stat1proj/Apis/Inserteddata_fetched.dart';
 import 'InsertAPIs.dart'; // 👈 next screen
@@ -42,6 +44,9 @@ class _InsertSplashscreenState extends State<InsertSplashscreen>
         ),
       ),
     );
+  }else{
+    Get.snackbar('Error','The user did not found enter new data');
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Insertapis()));
   }
   }
 

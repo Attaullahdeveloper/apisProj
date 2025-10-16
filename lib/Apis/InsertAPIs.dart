@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:stat1proj/Apis/Inserteddata_fetched.dart';
 class Insertapis extends StatefulWidget {
   const Insertapis({super.key});
@@ -40,6 +41,7 @@ bool  isLoading=false;
             'Hard disk size':harddiskController.text,
             }};
             Dio dio=Dio();
+            GetStorage getStorage=GetStorage();
             try{
               setState(() {
                 isLoading=true;
@@ -49,15 +51,16 @@ bool  isLoading=false;
                   url,
                   data:
                   requestbody);
+             getStorage.write('user_id',  response.data['id']);
               setState(() {
                 isLoading=false;
               });
               Navigator.push(context, CupertinoPageRoute(builder: (context)=>InserteddataFetched(
-                  name: nameController.text,
-                  year: yearController.text,
-                  price: priceController.text,
-                  cpuModel: modelController.text,
-                  hardDisk:harddiskController.text)));
+                  name: response.data['name'],//nameController.text,
+                  year: response.data['year'],
+                  price: response.data['price'],
+                  cpuModel: response.data['CPU model'],
+                  hardDisk:response.data['Hard disk size'])));
 
             }
             catch(e){
