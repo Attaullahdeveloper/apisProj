@@ -24,6 +24,8 @@ class _GetallUsersState extends State<GetallUsers> {
        isLoading=true;
      });
      final response=await dio.get(getUrl);
+     print('-Response--------${response}');
+     print('-----------');
      if(response.statusCode==200 || response.statusCode==201){
        final data=response.data;
        // store the list of users direct from JSON
@@ -46,6 +48,13 @@ class _GetallUsersState extends State<GetallUsers> {
      });
        }
  }
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchalldata();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

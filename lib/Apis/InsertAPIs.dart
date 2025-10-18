@@ -56,11 +56,11 @@ bool  isLoading=false;
                 isLoading=false;
               });
               Navigator.push(context, CupertinoPageRoute(builder: (context)=>InserteddataFetched(
-                  name: nameController.text,
-                  year: yearController.text,
-                  price: priceController.text,
-                  cpuModel: modelController.text,
-                  hardDisk:harddiskController.text)));
+                  name: response.data['name'], //nameController.text,
+                  year: response.data['data']['year'].toString(),
+                  price: response.data['data']['price'],
+                  cpuModel: response.data['data']['CPU model'],
+                  hardDisk:response.data['data']['Hard disk size'])));
 
             }
             catch(e){
