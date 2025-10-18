@@ -14,6 +14,7 @@ import 'package:stat1proj/signup_signin_screen/signinscreen.dart';
 import 'package:stat1proj/signup_signin_screen/signupscreen.dart';
 import 'package:stat1proj/state_counterapp.dart';
 
+import 'Apis/Inserteddata_fetched.dart';
 import 'Apis/Insertsplash.dart';
 import 'Apis/fetch_data.dart';
 import 'Collection_subCollection/Insert_screen.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:GetallUsers()
+      home:InsertSplashscreen()
     );
   }
 }
