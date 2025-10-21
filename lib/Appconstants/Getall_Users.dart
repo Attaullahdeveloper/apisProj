@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:stat1proj/Appconstants/Getalluser_detail.dart';
 import 'package:stat1proj/Appconstants/Rowwidget.dart';
 import 'package:stat1proj/Appconstants/Url_constant.dart';
+
+import 'Loading_widget.dart';
 class GetallUsers extends StatefulWidget {
   const GetallUsers({super.key});
 
@@ -59,7 +63,7 @@ class _GetallUsersState extends State<GetallUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Fetching all Users',),backgroundColor: Colors.orange,),
-      body:   isLoading?Center(child: CircularProgressIndicator()):
+      body:   isLoading?Center(child: AdvancedLoadingWidget(message: 'Loading user details...')):
       error!=''?Center(
         child: Column(
           children: [
@@ -75,27 +79,32 @@ class _GetallUsersState extends State<GetallUsers> {
           itemCount: users.length,
           itemBuilder: (context,index) {
           final user=users[index];
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 2,
-            margin: EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(user['image']??''),
-                  radius: 40,
-                ),
-                SizedBox(height: 20,),
-                //  Use RowWidget with index-based user data
-                InfoRow(title: 'First Name', value: user['firstName'] ?? ''),
-                InfoRow(title: 'Last Name', value: user['lastName'] ?? ''),
-                InfoRow(title: 'Maiden Name', value: user['maidenName'] ?? ''),
-                InfoRow(title: 'Age', value: user['age'].toString()),
+          return InkWell(
+            onTap: (){
+              Navigator.push(context,CupertinoPageRoute(builder: (context)=>GetalluserDetail(user: user)));
+            },
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 2,
+              margin: EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(user['image']??''),
+                    radius: 40,
+                  ),
+                  SizedBox(height: 20,),
+                  //  Use RowWidget with index-based user data
+                  InfoRow(title: 'First Name', value: user['firstName'] ?? ''),
+                  InfoRow(title: 'Last Name', value: user['lastName'] ?? ''),
+                  InfoRow(title: 'Maiden Name', value: user['maidenName'] ?? ''),
+                  InfoRow(title: 'Age', value: user['age'].toString()),
 
 
-              ],
+                ],
+              ),
             ),
           );
           }),
