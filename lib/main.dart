@@ -6,6 +6,7 @@ import 'package:stat1proj/Appconstants/Getall_Users.dart';
 import 'package:stat1proj/Appconstants/ender_id.dart';
 import 'package:stat1proj/Collection_subCollection/fetch_screen.dart';
 import 'package:stat1proj/Collection_subCollection/fetchstudent_screen.dart';
+import 'package:stat1proj/Grocery_api/Grocery_splash.dart';
 import 'package:stat1proj/Homeui_kit/smart_uikit.dart';
 import 'package:stat1proj/circularbar.dart';
 import 'package:stat1proj/firebase_options.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:GetallUserGrocery()
+      home:Grocerysplash()
     );
   }
 }
