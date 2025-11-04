@@ -33,7 +33,7 @@ class _GetallUsersState extends State<GetallUsers> {
      if(response.statusCode==200 || response.statusCode==201){
        final data=response.data;
        // store the list of users direct from JSON
-       users=List<Map<String,dynamic>>.from(data['users']);
+       users=List<Map<String,dynamic>>.from(data['users']);// here the users is from api
        setState(() {
          isLoading=false;
        });

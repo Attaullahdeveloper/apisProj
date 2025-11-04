@@ -30,7 +30,7 @@ class _GetallUserGroceryState extends State<GetallUserGrocery> {
         final data = response.data;
         // store list direcrt from api
         setState(() {
-          groceryUsers = List<Map<String, dynamic>>.from(data['groceryUsers']);
+          groceryUsers = List<Map<String, dynamic>>.from(data['recipes']);
           isLoading = false;
         });
       } else {
@@ -47,6 +47,7 @@ class _GetallUserGroceryState extends State<GetallUserGrocery> {
       });
     }
   }
+  // ------------calling the fetching user function-----------------------------
   @override
   void initState() {
     // TODO: implement initState
@@ -233,3 +234,4 @@ class _GetallUserGroceryState extends State<GetallUserGrocery> {
     );
   }
 }
+
