@@ -19,6 +19,7 @@ import 'Apis/Inserteddata_fetched.dart';
 import 'Apis/Insertsplash.dart';
 import 'Apis/fetch_data.dart';
 import 'Collection_subCollection/Insert_screen.dart';
+import 'GetxAPis/sources/get-screen.dart';
 import 'Grocery_api/Getall_user_grocery.dart';
 import 'loginuser.dart';
 
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:Grocerysplash()
+      home:Getscreen(),
     );
   }
 }
