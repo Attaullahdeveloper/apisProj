@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stat1proj/GetxAPis/sources/get-all-screen.dart';
 import 'package:stat1proj/GetxAPis/sources/get-screen.dart';
 
 import 'icon_animation.dart';
@@ -78,31 +79,36 @@ class Buttonscreen extends StatelessWidget {
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 60),
-            child: Container(
-              height: 52,
-              width: 250,
-              decoration:  BoxDecoration(
-               borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF2196F3), // Light Blue
-                    Color(0xFF1565C0), // Deep Blue
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, CupertinoPageRoute(builder: (context)=>Getallscreen()));
+              },
+              child: Container(
+                height: 52,
+                width: 250,
+                decoration:  BoxDecoration(
+                 borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF2196F3), // Light Blue
+                      Color(0xFF1565C0), // Deep Blue
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
 
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                  Text('Get All Users',style: TextStyle(color: Colors.white),),
+                    Container(
+                      // color: Colors.blue,
+                        height: 40,
+                        width: 40,
+                        child: SimpleIconAnimation()),
+                ],),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                Text('Get All Users',style: TextStyle(color: Colors.white),),
-                  Container(
-                    // color: Colors.blue,
-                      height: 40,
-                      width: 40,
-                      child: SimpleIconAnimation()),
-              ],),
             ),
           ),
           SizedBox(height: 20,),

@@ -39,7 +39,8 @@ class Getscreen extends StatelessWidget {
       ),
 
 
-      body: Obx(() {
+      body:
+      Obx(() {
         if (getdata.Loaging.value) {
           return const Center(
             child: AdvancedLoadingWidget(message: 'Loading'),

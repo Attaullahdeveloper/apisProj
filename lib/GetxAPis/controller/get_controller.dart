@@ -7,11 +7,12 @@ class Getdata extends GetxController{
   final Getrepo getrepo=Get.put(Getrepo());
 
   final RxMap<String,dynamic> user=RxMap();
- // final RxList<dynamic>alluser=RxList();
+  final RxList<dynamic>alluser=RxList();
   final RxBool Loaging=true.obs;
   void onInit(){
     super.onInit();
     getxfetchusers();
+    getxallusers();
   }
 
   Future<void> getxfetchusers()async{
@@ -22,5 +23,14 @@ class Getdata extends GetxController{
     }
     Loaging(false);
   }
+  Future<void> getxallusers()async{
+    Loaging(true);
+    final data= await getrepo.getalldata();
+    if(data!=null){
+      alluser.assignAll(data);
+    }
+    Loaging(false);
+  }
+
 
 }
