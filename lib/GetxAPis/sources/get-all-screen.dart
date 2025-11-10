@@ -46,18 +46,18 @@ class Getallscreen extends StatelessWidget {
   // returnPageController pageController = PageController(viewportFraction: 0.85); // Controller for PageView with partial next/prev cards
 
  return  PageView.builder(
-     controller: pageController, // ✅ Attach controller for animation
+     controller: pageController, //  Attach controller for animation
      itemCount: getdata.alluser.length, // Total number of users
      itemBuilder: (context, index) {
        final user = getdata.alluser[index]; // Get user data at this index
 
        return AnimatedBuilder(
-         animation: pageController, // ✅ Listen to page scroll changes
+         animation: pageController, //  Listen to page scroll changes
          builder: (context, child) {
            double value = 1.0;
            if (pageController.position.haveDimensions) {
-             value = pageController.page! - index; // ✅ Difference between current page and this page
-             value = (1 - (value.abs() * 0.2)).clamp(0.8, 1.0); // ✅ Scale value for image animation
+             value = pageController.page! - index; // Difference between current page and this page
+             value = (1 - (value.abs() * 0.2)).clamp(0.8, 1.0); // Scale value for image animation
            }
 
            return Container(
@@ -78,9 +78,9 @@ class Getallscreen extends StatelessWidget {
                child: Column(
                  crossAxisAlignment: CrossAxisAlignment.center,
                  children: [
-                   // ✅ Animated Image
+                   //  Animated Image
                    Transform.scale(
-                     scale: value, // ✅ Scale image based on scroll position
+                     scale: value, //  Scale image based on scroll position
                      child: CircleAvatar(
                        radius: 50,
                        backgroundImage: NetworkImage(user['image'] ?? ''), // User image

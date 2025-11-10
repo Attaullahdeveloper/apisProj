@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class InserteddataFetched extends StatelessWidget {
   final String name;
   final String year;
-  final String price;
+  final dynamic price;
   final String cpuModel;
   final String hardDisk;
 
