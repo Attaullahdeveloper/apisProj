@@ -114,7 +114,8 @@ Future<Map<String,dynamic>> verifyotp({
  // ----------------------------------------------------------
  //  POST / UPDATE PROFILE
  // ----------------------------------------------------------
- Future<Map<String, dynamic>> updateProfile({
+ Future<Map<String, dynamic>> updateProfile(
+     {
   required String userId,           // Logged-in user ID
   required String token,            // Auth token
   required String nickname,
