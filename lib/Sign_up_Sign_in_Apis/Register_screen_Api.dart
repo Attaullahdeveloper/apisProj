@@ -31,169 +31,171 @@ class _ProfileScreen_ApiState extends State<ProfileScreen_Api> {
         ),
       ),
 
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(22),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.07),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                )
-              ],
-            ),
-
-            child: Column(
-              children: [
-                // --------------------------
-                // Profile Picture
-                // --------------------------
-                Center(
-                  child: Column(
-                    children: [
-                      const CircleAvatar(
-                        radius: 45,
-                        backgroundImage:
-                        AssetImage("assets/sm1.png"),
-                      ),
-                      const SizedBox(height: 8),
-                      TextButton(
-                        onPressed: () {
-                          // TODO: Implement image picker
-                        },
-                        child: const Text("Upload Profile Image"),
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(22),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.07),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ],
+              ),
+        
+              child: Column(
+                children: [
+                  // --------------------------
+                  // Profile Picture
+                  // --------------------------
+                  Center(
+                    child: Column(
+                      children: [
+                        const CircleAvatar(
+                          radius: 45,
+                          backgroundImage:
+                          AssetImage("assets/sm1.png"),
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () {
+                            // TODO: Implement image picker
+                          },
+                          child: const Text("Upload Profile Image"),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // Nickname
-                _buildInput("Nickname",
-                  controller: registerController.nicknameController,
-                ),
-                const SizedBox(height: 15),
-
-                // --------------------------
-                // Gender Dropdown
-                // --------------------------
-                _buildGenderDropdown(
-
-                ),
-                const SizedBox(height: 15),
-
-                // Bio
-                _buildInput("Bio", maxLines: 3,
-                controller: registerController.bioController),
-                const SizedBox(height: 15),
-
-                // Location
-                _buildInput("Location",
-                controller: TextEditingController(text: registerController.location)),
-                const SizedBox(height: 15,
-                ),
-
-                // Age
-                _buildInput("Age",
-                controller: registerController.ageController),
-                const SizedBox(height: 15),
-
-                // --------------------------
-                // Spoken Languages Dropdown
-                // --------------------------
-                _buildSpokenDropdown(),
-                const SizedBox(height: 15),
-
-                // --------------------------
-                // Learning Languages Dropdown
-                // --------------------------
-                _buildLearningDropdown(),
-                const SizedBox(height: 25),
-
-                // Save Button
-                // -----------------------------
-                //  Save Profile Button
-                // Calls controller.saveProfile
-                //  Loading indicator with Obx
-                // -----------------------------
-                Obx(() => registerController.postuerloading.value
-                    ? const CircularProgressIndicator()
-                    : SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      final token = registerController.token.value;
-                      final userId = registerController.userId.value.toString();
-
-                      if (token.isEmpty || userId == "0") {
-                        Get.snackbar("Error", "User not logged in",
+        
+                  const SizedBox(height: 20),
+        
+                  // Nickname
+                  _buildInput("Nickname",
+                    controller: registerController.nicknameController,
+                  ),
+                  const SizedBox(height: 15),
+        
+                  // --------------------------
+                  // Gender Dropdown
+                  // --------------------------
+                  _buildGenderDropdown(
+        
+                  ),
+                  const SizedBox(height: 15),
+        
+                  // Bio
+                  _buildInput("Bio", maxLines: 3,
+                  controller: registerController.bioController),
+                  const SizedBox(height: 15),
+        
+                  // Location
+                  _buildInput("Location",
+                  controller: TextEditingController(text: registerController.location)),
+                  const SizedBox(height: 15,
+                  ),
+        
+                  // Age
+                  _buildInput("Age",
+                  controller: registerController.ageController),
+                  const SizedBox(height: 15),
+        
+                  // --------------------------
+                  // Spoken Languages Dropdown
+                  // --------------------------
+                  _buildSpokenDropdown(),
+                  const SizedBox(height: 15),
+        
+                  // --------------------------
+                  // Learning Languages Dropdown
+                  // --------------------------
+                  _buildLearningDropdown(),
+                  const SizedBox(height: 25),
+        
+                  // Save Button
+                  // -----------------------------
+                  //  Save Profile Button
+                  // Calls controller.saveProfile
+                  //  Loading indicator with Obx
+                  // -----------------------------
+                  Obx(() => registerController.postuerloading.value
+                      ? const CircularProgressIndicator()
+                      : SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        final token = registerController.token.value;
+                        final userId = registerController.userId.value.toString();
+        
+                        if (token.isEmpty || userId == "0") {
+                          Get.snackbar("Error", "User not logged in",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white);
+                          return;
+                        }
+        
+                        try {
+                          // 🔹 Call API to save profile
+                           registerController.saveProfile(
+                            userId: userId,
+                            token: token,
+                            avatar: "profile.png",
+                          );
+        
+                          // 🔹 Show success snackbar
+                          Get.snackbar(
+                            "Success",
+                            "Profile updated successfully",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                            duration: const Duration(seconds: 2),
+                          );
+        
+                          // 🔹 Navigate to home screen after a short delay
+                          Future.delayed(const Duration(seconds: 2), () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen_Api())); // Replace '/home' with your home route
+                          });
+                        } catch (e) {
+                          // 🔹 Handle errors
+                          Get.snackbar(
+                            "Error",
+                            "Failed to update profile: $e",
                             snackPosition: SnackPosition.BOTTOM,
                             backgroundColor: Colors.red,
-                            colorText: Colors.white);
-                        return;
-                      }
-
-                      try {
-                        // 🔹 Call API to save profile
-                         registerController.saveProfile(
-                          userId: userId,
-                          token: token,
-                          avatar: "profile.png",
-                        );
-
-                        // 🔹 Show success snackbar
-                        Get.snackbar(
-                          "Success",
-                          "Profile updated successfully",
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          colorText: Colors.white,
-                          duration: const Duration(seconds: 2),
-                        );
-
-                        // 🔹 Navigate to home screen after a short delay
-                        Future.delayed(const Duration(seconds: 2), () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen_Api())); // Replace '/home' with your home route
-                        });
-                      } catch (e) {
-                        // 🔹 Handle errors
-                        Get.snackbar(
-                          "Error",
-                          "Failed to update profile: $e",
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1E3A8A),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                            colorText: Colors.white,
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1E3A8A),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: const Text(
+                        "Save Profile",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                    child: const Text(
-                      "Save Profile",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                )),
-              ],
+                  )),
+                ],
+              ),
             ),
-          ),
-
-          const SizedBox(height: 20),
-        ],
+        
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
