@@ -22,6 +22,12 @@ import 'Collection_subCollection/Insert_screen.dart';
 import 'GetxAPis/sources/get-screen.dart';
 import 'Getx_single_multi_byid_Apis/Button-screen.dart';
 import 'Grocery_api/Getall_user_grocery.dart';
+import 'Sign_up_Sign_in_Apis/Get_screen.dart';
+import 'Sign_up_Sign_in_Apis/Otp_screeb.dart';
+import 'Sign_up_Sign_in_Apis/Register_repo/Home_Screen.dart';
+import 'Sign_up_Sign_in_Apis/Register_screen_Api.dart';
+import 'Sign_up_Sign_in_Apis/Sign_in_screen.dart';
+import 'Sign_up_Sign_in_Apis/Sign_up_Screeb.dart';
 import 'loginuser.dart';
 
 
@@ -40,6 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -60,7 +67,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:InsertSplashscreen(),
+      home:Get_screen(),
     );
   }
 }
