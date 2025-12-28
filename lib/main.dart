@@ -30,6 +30,7 @@ import 'Sign_up_Sign_in_Apis/Register_repo/Home_Screen.dart';
 import 'Sign_up_Sign_in_Apis/Register_screen_Api.dart';
 import 'Sign_up_Sign_in_Apis/Sign_in_screen.dart';
 import 'Sign_up_Sign_in_Apis/Sign_up_Screeb.dart';
+import 'google_map/googlemap.dart';
 import 'loginuser.dart';
 
 
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:LocationScreen(),
+      home:Googlemapclass(),
     );
   }
 }
