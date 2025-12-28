@@ -11,6 +11,7 @@ import '../Register_repo/Register_repo.dart';
 import '../Register_screen_Api.dart';
 import '../Sign_in_screen.dart';
 import 'package:get_storage/get_storage.dart';
+import '../Register_repo/Home_Screen.dart';
 
 class RegisterController extends GetxController{
 
@@ -209,8 +210,8 @@ Future<bool> sendOtp(String email)async{
 
       // Navigate to Home Screen
       await Future.delayed(const Duration(milliseconds: 400));
-      Get.offAllNamed("/home");
-    } catch (e) {
+      Get.to(HomeScreen_Api());
+        } catch (e) {
       loginLoading.value = false;
 
       Get.snackbar(

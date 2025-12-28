@@ -66,7 +66,7 @@ class LoginScreen_api extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   buildInput("Password", Icons.lock, isPassword: true,
-                  controller: _registerController.confirmPasswordController),
+                  controller: _registerController.loginPassController),
                   const SizedBox(height: 25),
 
                   // LOGIN BUTTON
