@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+
 class Googlemapclass extends StatefulWidget {
   const Googlemapclass({super.key});
 
@@ -9,40 +11,121 @@ class Googlemapclass extends StatefulWidget {
 
 class _GooglemapclassState extends State<Googlemapclass> {
   late GoogleMapController mapController;
-  // Marker list
   final Set<Marker> _markers = {};
+  
+  // Initial position (Islamabad example)
+  final LatLng _initialPosition = const LatLng(33.6844, 73.0479); 
 
-  // Initial position
-  final LatLng _initialPosition = const LatLng(33.6844, 73.0479); // Islamabad example
+  @override
+  void initState() {
+    super.initState();
+    _getUserCurrentLocation();
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+// current location user funciton-----------------------
+  Future<void> _getUserCurrentLocation() async {
+    // 1. Check if location services are enabled
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Location services are disabled. Please enable them.'),
+      ));
+      return;
+    }
 
+    // 2. Check permissions
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are denied'),
+        ));
+        return;
+      }
+    }
+    
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are permanently denied, we cannot request permissions.'),
+        ));
+      return;
+    } 
+
+    // 3. Get the Position
+    Position position = await Geolocator.getCurrentPosition();
+    
+    double currentLat = position.latitude;
+    double currentLng = position.longitude;
+
+    // 4. Update the Marker and Camera
     setState(() {
+      LatLng userPosition = LatLng(currentLat, currentLng);
+      LatLng randomPosition = const LatLng(33.7000, 73.0600); // Random nearby location
+
+      _markers.clear();
+      
+      // Add User Location Marker
       _markers.add(
         Marker(
-          markerId: const MarkerId("marker1"),
-          position: _initialPosition,
-          infoWindow: const InfoWindow(
-            title: "My Location",
-            snippet: "This is marker location",
+          markerId: const MarkerId("currentLocation"),
+          position: userPosition,
+          infoWindow: InfoWindow(
+            title: "My Current Location",
+            snippet: "Lat: $currentLat, Lng: $currentLng",
           ),
         ),
       );
+
+      // Add Random Marker
+      _markers.add(
+        Marker(
+          markerId: const MarkerId("randomMarker"),
+          position: const LatLng(33.7000, 73.0600),
+          infoWindow: const InfoWindow(
+            title: "Random Place",
+            snippet: "This is a random marker",
+          ),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), // Different color
+        ),
+      );
     });
+
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(currentLat, currentLng),
+          zoom: 15,
+        ),
+      ),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google Map Started',style: TextStyle(color: Colors.black),),
+        title: const Text('Google Map', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.blue,
       ),
       body: GoogleMap(
-          initialCameraPosition: CameraPosition(target: LatLng(73.0000, 83.2222),
-          zoom: 14,),
-      mapType: MapType.hybrid,
-      markers: _markers,),
+        initialCameraPosition: CameraPosition(
+          target: _initialPosition,
+          zoom: 14,
+        ),
+        mapType: MapType.hybrid,
+        onMapCreated: _onMapCreated,
+        markers: _markers,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getUserCurrentLocation,
+        child: const Icon(Icons.my_location),
+      ),
     );
   }
 }
